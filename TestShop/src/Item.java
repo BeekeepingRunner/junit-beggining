@@ -1,4 +1,6 @@
-public class Item {
+import java.util.Objects;
+
+public class Item implements Comparable<Item> {
 
     String name;
     double price;
@@ -22,5 +24,30 @@ public class Item {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Double.compare(item.price, price) == 0 && name.equals(item.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price);
+    }
+
+    @Override
+    public int compareTo(Item o) {
+        if (o == null) {
+            return 1;
+        }
+        int comparison = this.getName().compareTo(o.getName());
+        if (comparison != 0) {
+            return comparison;
+        }
+        return Double.compare(this.getPrice(), o.getPrice());
     }
 }

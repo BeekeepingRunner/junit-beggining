@@ -26,7 +26,7 @@ public class BasketTest {
         Item phone = new Item("Phone", 1000);
         basket.addItem(phone, 2);
         basket.addItem(phone, 1);
-        assertEquals((long)basket.orderedItems.get(phone), 3);
+        assertEquals(3, (long)basket.orderedItems.get(phone));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -39,7 +39,7 @@ public class BasketTest {
         Item phone = new Item("Phone", 1000);
         basket.addItem(phone, 4);
         basket.removeItem(phone, 3);
-        assertEquals((long)basket.orderedItems.get(phone), 1);
+        assertEquals(1, (long)basket.orderedItems.get(phone));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class BasketTest {
         Item phone = new Item("Phone", 1000);
         basket.addItem(phone, 4);
         basket.removeItem(phone, 4);
-        assertEquals(basket.orderedItems.get(phone), null);
+        assertEquals(null, basket.orderedItems.get(phone));
     }
 
     @Test(expected = IllegalStateException.class)
@@ -57,5 +57,32 @@ public class BasketTest {
         basket.removeItem(phone, 5);
     }
 
+    @Test
+    public void totalOrderValueCorrectnessTest() {
+        Item phone = new Item("Phone", 500);
+        Item hat = new Item("Hat", 50);
 
+        double expectedOrderVal = phone.getPrice() * 2 + hat.getPrice() * 5;
+
+        basket.addItem(phone, 3);
+        basket.addItem(hat, 5);
+        basket.removeItem(phone, 1);
+        assertEquals(expectedOrderVal, basket.getTotalOrderValue(), 0);
+    }
+
+    @Test
+    public void toStringTest() {
+        initExample();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hat 5\nPhone 3\nTotal value: 1750,00");
+        assertEquals(sb.toString(), basket.toString());
+        // System.out.println(basket.toString());
+    }
+
+    void initExample() {
+        Item phone = new Item("Phone", 500);
+        Item hat = new Item("Hat", 50);
+        basket.addItem(phone, 3);
+        basket.addItem(hat, 5);
+    }
 }

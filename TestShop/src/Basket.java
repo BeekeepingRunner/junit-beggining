@@ -54,7 +54,7 @@ public class Basket {
         for (Map.Entry<Item, Integer> entry : orderedItems.entrySet()) {
 
             outString.append(entry.getKey().getName())
-                    .append("\t")
+                    .append(" ")
                     .append(entry.getValue())
                     .append("\n");
         }
